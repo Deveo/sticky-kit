@@ -7,6 +7,8 @@ $ = window.jQuery
 win = $ window
 doc = $ document
 
+scroll_container = win;
+
 $.fn.stick_in_parent = (opts={}) ->
   {
     sticky_class
@@ -16,6 +18,7 @@ $.fn.stick_in_parent = (opts={}) ->
     offset_top
     spacer: manual_spacer
     bottoming: enable_bottoming
+    container
   } = opts
 
   win_height = win.height()
@@ -27,6 +30,8 @@ $.fn.stick_in_parent = (opts={}) ->
   sticky_class ?= "is_stuck"
 
   enable_bottoming = true unless enable_bottoming?
+
+  scroll_container = $ container if container?
 
   # we need this because jquery's version (along with css()) rounds everything
   outer_width = (el) ->
@@ -131,7 +136,7 @@ $.fn.stick_in_parent = (opts={}) ->
           recalc()
           recalced = true
 
-        scroll = win.scrollTop()
+        scroll = scroll_container.scrollTop()
         if last_pos?
           delta = scroll - last_pos
         last_pos = scroll
@@ -230,9 +235,9 @@ $.fn.stick_in_parent = (opts={}) ->
 
       detach = ->
         detached = true
-        win.off "touchmove", tick
-        win.off "scroll", tick
-        win.off "resize", recalc_and_tick
+        scroll_container.off "scroll", tick
+        scroll_container.off "touchmove", tick
+        scroll_container.off "resize", recalc_and_tick
 
         $(document.body).off "sticky_kit:recalc", recalc_and_tick
         elm.off "sticky_kit:detach", detach
@@ -255,9 +260,10 @@ $.fn.stick_in_parent = (opts={}) ->
 
           elm.removeClass sticky_class
 
-      win.on "touchmove", tick
-      win.on "scroll", tick
-      win.on "resize", recalc_and_tick
+      scroll_container.on "scroll", tick
+      scroll_container.on "touchmove", tick
+      scroll_container.on "resize", recalc_and_tick
+
       $(document.body).on "sticky_kit:recalc", recalc_and_tick
       elm.on "sticky_kit:detach", detach
 
