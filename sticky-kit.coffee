@@ -77,7 +77,7 @@ $.fn.stick_in_parent = (opts={}) ->
         padding_top = parseInt parent.css("padding-top"), 10
         padding_bottom = parseInt parent.css("padding-bottom"), 10
 
-        parent_top = parent.offset().top + border_top + padding_top
+        parent_top = parent.offset().top + border_top + padding_top + scroll_container.scrollTop()
         parent_height = parent.height()
 
         if fixed
@@ -97,7 +97,7 @@ $.fn.stick_in_parent = (opts={}) ->
 
           restore = true
 
-        top = elm.offset().top - (parseInt(elm.css("margin-top"), 10) or 0) - offset_top
+        top = elm.offset().top - (parseInt(elm.css("margin-top"), 10) or 0) - offset_top + scroll_container.scrollTop()
 
         height = elm.outerHeight true
 
