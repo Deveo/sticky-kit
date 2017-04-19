@@ -87,7 +87,7 @@
         border_top = parseInt(parent.css("border-top-width"), 10);
         padding_top = parseInt(parent.css("padding-top"), 10);
         padding_bottom = parseInt(parent.css("padding-bottom"), 10);
-        parent_top = parent.offset().top + border_top + padding_top;
+        parent_top = parent.offset().top + border_top + padding_top + scroll_container.scrollTop();
         parent_height = parent.height();
         if (fixed) {
           fixed = false;
@@ -104,7 +104,7 @@
           }).removeClass(sticky_class);
           restore = true;
         }
-        top = elm.offset().top - (parseInt(elm.css("margin-top"), 10) || 0) - offset_top;
+        top = elm.offset().top - (parseInt(elm.css("margin-top"), 10) || 0) - offset_top + scroll_container.scrollTop();
         height = elm.outerHeight(true);
         el_float = elm.css("float");
         if (spacer) {
