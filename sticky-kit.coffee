@@ -237,7 +237,7 @@ $.fn.stick_in_parent = (opts={}) ->
         detached = true
         scroll_container.off "scroll", tick
         scroll_container.off "touchmove", tick
-        scroll_container.off "resize", recalc_and_tick
+        win.off "resize", recalc_and_tick
 
         $(document.body).off "sticky_kit:recalc", recalc_and_tick
         elm.off "sticky_kit:detach", detach
@@ -262,7 +262,7 @@ $.fn.stick_in_parent = (opts={}) ->
 
       scroll_container.on "scroll", tick
       scroll_container.on "touchmove", tick
-      scroll_container.on "resize", recalc_and_tick
+      win.on "resize", recalc_and_tick
 
       $(document.body).on "sticky_kit:recalc", recalc_and_tick
       elm.on "sticky_kit:detach", detach
